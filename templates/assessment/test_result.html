@@ -1,0 +1,145 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}نتیجه آزمون - {{ result.test.title }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .result-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .interpretation {
+        font-size: 1.5rem;
+        font-weight: 500;
+        padding: 10px 15px;
+        border-radius: 5px;
+    }
+    .interpretation-low {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    .interpretation-medium {
+        background-color: #fff3cd;
+        color: #856404;
+    }
+    .interpretation-high {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+    .test-id {
+        font-size: 1.1rem;
+        font-family: monospace;
+        letter-spacing: 1px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="result-container">
+    <div class="card border-0 shadow mb-4">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">نتیجه آزمون {{ result.test.title }}</h3>
+        </div>
+        <div class="card-body text-center p-5">
+            <div class="mb-4">
+                {% with interpretation=result.get_interpretation %}
+                    {% if 'کم' in interpretation %}
+                        <div class="interpretation interpretation-low">{{ interpretation }}</div>
+                    {% elif 'متوسط' in interpretation %}
+                        <div class="interpretation interpretation-medium">{{ interpretation }}</div>
+                    {% else %}
+                        <div class="interpretation interpretation-high">{{ interpretation }}</div>
+                    {% endif %}
+                {% endwith %}
+            </div>
+            
+            <div class="mb-3">
+                <span class="badge bg-secondary test-id">شناسه آزمون: {{ result.unique_id }}</span>
+            </div>
+            
+            <div class="text-muted mb-4">
+                تاریخ آزمون: {{ result.date_taken|date:"Y/m/d H:i" }}
+            </div>
+            
+            <div class="d-flex justify-content-center gap-3">
+                <a href="{% url 'test_list' %}" class="btn btn-outline-primary">
+                    بازگشت به آزمون‌ها
+                </a>
+                <a href="{% url 'profile' %}" class="btn btn-primary">
+                    مشاهده پروفایل
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card border-0 shadow mb-4">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">توضیحات نتیجه</h4>
+        </div>
+        <div class="card-body">
+            {% with interpretation=result.get_interpretation %}
+                {% if 'کم' in interpretation %}
+                    <div class="alert alert-success">
+                        <h5>احتمال ADHD کم</h5>
+                        <p>
+                            براساس پاسخ‌های شما، احتمال اینکه نشانه‌های ADHD را داشته باشید کم است.
+                            با این حال، این فقط یک ارزیابی اولیه است و برای اطمینان بیشتر، بهتر است با متخصص مشورت کنید.
+                        </p>
+                    </div>
+                {% elif 'متوسط' in interpretation %}
+                    <div class="alert alert-warning">
+                        <h5>احتمال ADHD متوسط</h5>
+                        <p>
+                            براساس پاسخ‌های شما، ممکن است برخی نشانه‌های ADHD را داشته باشید.
+                            توصیه می‌شود برای ارزیابی دقیق‌تر با یک روانپزشک یا روانشناس مشورت کنید.
+                        </p>
+                    </div>
+                {% else %}
+                    <div class="alert alert-danger">
+                        <h5>احتمال ADHD بالا</h5>
+                        <p>
+                            براساس پاسخ‌های شما، احتمال زیادی وجود دارد که نشانه‌های ADHD را داشته باشید.
+                            توصیه می‌شود هرچه سریعتر با یک متخصص مشورت کنید تا تشخیص دقیق و راهکارهای درمانی مناسب ارائه شود.
+                        </p>
+                    </div>
+                {% endif %}
+            {% endwith %}
+            
+            <div class="alert alert-info">
+                <h5>یادآوری مهم</h5>
+                <p>
+                    نتیجه این آزمون تنها یک راهنمایی اولیه است و جایگزین تشخیص تخصصی نیست.
+                    ADHD یک اختلال پیچیده است که نیاز به ارزیابی دقیق توسط متخصصان دارد.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card border-0 shadow">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">منابع مفید</h4>
+        </div>
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <i class="bi bi-book me-2"></i>
+                    کتاب «راهنمای جامع ADHD»
+                </li>
+                <li class="list-group-item">
+                    <i class="bi bi-globe me-2"></i>
+                    انجمن ADHD ایران - <a href="#" target="_blank">adhd.ir</a>
+                </li>
+                <li class="list-group-item">
+                    <i class="bi bi-hospital me-2"></i>
+                    مراکز تخصصی روانپزشکی و روانشناسی
+                </li>
+                <li class="list-group-item">
+                    <i class="bi bi-info-circle me-2"></i>
+                    صفحه <a href="{% url 'about' %}">درباره ما</a> برای اطلاعات بیشتر
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,202 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}درباره ما - سیستم آزمون ADHD{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card border-0 shadow mb-4">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">درباره سیستم آزمون ADHD</h3>
+            </div>
+            <div class="card-body p-4">
+                <div class="row mb-4">
+                    <div class="col-md-4 mb-3 mb-md-0">
+                        <img src="{% static 'img/about-us.jpg' %}" class="img-fluid rounded" alt="درباره ما" onerror="this.src='https://placehold.co/400x300/'">
+                    </div>
+                    <div class="col-md-8">
+                        <h4>اهداف ما</h4>
+                        <p class="lead">
+                            هدف ما در سیستم آزمون ADHD، ارائه ابزارهای غربالگری آنلاین و منابع آموزشی برای کمک به شناسایی اولیه
+                            نشانه‌های اختلال بیش‌فعالی و نقص توجه (ADHD) است.
+                        </p>
+                        <p>
+                            ما معتقدیم که دسترسی به ابزارهای تشخیصی اولیه می‌تواند به افراد کمک کند تا آگاهی بیشتری
+                            نسبت به سلامت روان خود پیدا کنند و در صورت نیاز، زودتر به دنبال کمک تخصصی باشند.
+                        </p>
+                    </div>
+                </div>
+                
+                <hr class="my-4">
+                
+                <h4 class="mb-3">چشم‌انداز ما</h4>
+                <p>
+                    چشم‌انداز ما ایجاد جامعه‌ای است که در آن هر فرد مبتلا به ADHD بتواند با دسترسی به منابع مناسب،
+                    امکان شناسایی زودهنگام، تشخیص دقیق و درمان مؤثر را داشته باشد.
+                </p>
+                
+                <div class="row row-cols-1 row-cols-md-3 g-4 my-4">
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                <div class="display-5 text-primary mb-3">
+                                    <i class="bi bi-lightbulb"></i>
+                                </div>
+                                <h5 class="card-title">آگاهی‌بخشی</h5>
+                                <p class="card-text">
+                                    افزایش آگاهی عمومی در مورد ADHD و روش‌های تشخیص و درمان آن
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                <div class="display-5 text-primary mb-3">
+                                    <i class="bi bi-tools"></i>
+                                </div>
+                                <h5 class="card-title">ابزارهای غربالگری</h5>
+                                <p class="card-text">
+                                    ارائه ابزارهای غربالگری استاندارد برای شناسایی اولیه نشانه‌های ADHD
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                <div class="display-5 text-primary mb-3">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <h5 class="card-title">پشتیبانی</h5>
+                                <p class="card-text">
+                                    ارتباط افراد با متخصصان و منابع مناسب برای تشخیص و درمان
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <hr class="my-4">
+                
+                <h4 class="mb-3">تیم ما</h4>
+                <p>
+                    تیم ما متشکل از متخصصان روانشناسی، روانپزشکی و متخصصان فناوری اطلاعات است که با همکاری یکدیگر
+                    این پلتفرم را توسعه داده‌اند.
+                </p>
+                <div class="row row-cols-1 row-cols-md-3 g-4 mt-3">
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                <img src="{% static 'img/team/team1.jpg' %}" class="rounded-circle profile-img mb-3" alt="عضو تیم" onerror="this.src='https://placehold.co/150x150/'">
+                                <h5 class="card-title">دکتر احمد محمدی</h5>
+                                <p class="text-muted">روانپزشک</p>
+                                <p class="card-text small">
+                                    متخصص اختلالات رفتاری کودکان و بزرگسالان با تمرکز بر ADHD
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                <img src="{% static 'img/team/team2.jpg' %}" class="rounded-circle profile-img mb-3" alt="عضو تیم" onerror="this.src='https://placehold.co/150x150/'">
+                                <h5 class="card-title">دکتر سارا کریمی</h5>
+                                <p class="text-muted">روانشناس بالینی</p>
+                                <p class="card-text small">
+                                    متخصص در زمینه سنجش و اندازه‌گیری روانشناختی
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                <img src="{% static 'img/team/team3.jpg' %}" class="rounded-circle profile-img mb-3" alt="عضو تیم" onerror="this.src='https://placehold.co/150x150/'">
+                                <h5 class="card-title">مهندس علی رضایی</h5>
+                                <p class="text-muted">مدیر فنی</p>
+                                <p class="card-text small">
+                                    متخصص در توسعه نرم‌افزارهای کاربردی حوزه سلامت
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card border-0 shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">اطلاعات بیشتر درباره ADHD</h4>
+            </div>
+            <div class="card-body p-4">
+                <h5>اختلال بیش‌فعالی و نقص توجه (ADHD) چیست؟</h5>
+                <p>
+                    ADHD یک اختلال رشدی-عصبی است که با الگوهای پایدار عدم توجه، بیش‌فعالی و رفتار تکانشی مشخص می‌شود.
+                    این اختلال معمولاً در دوران کودکی شروع می‌شود و تا بزرگسالی ادامه می‌یابد.
+                </p>
+                
+                <h5 class="mt-4">علائم اصلی ADHD</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>علائم بی‌توجهی:</h6>
+                        <ul>
+                            <li>مشکل در توجه به جزئیات یا اشتباهات ناشی از بی‌دقتی</li>
+                            <li>دشواری در حفظ توجه در فعالیت‌ها</li>
+                            <li>به نظر نمی‌رسد وقتی با او صحبت می‌شود، گوش دهد</li>
+                            <li>ناتوانی در دنبال کردن دستورالعمل‌ها و تکمیل وظایف</li>
+                            <li>مشکل در سازماندهی وظایف و فعالیت‌ها</li>
+                            <li>اجتناب از وظایفی که نیاز به تلاش ذهنی مداوم دارند</li>
+                            <li>گم کردن اشیاء ضروری برای انجام وظایف</li>
+                            <li>حواس‌پرتی آسان</li>
+                            <li>فراموشکاری در فعالیت‌های روزانه</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>علائم بیش‌فعالی و تکانشگری:</h6>
+                        <ul>
+                            <li>بی‌قراری یا حرکت دست و پا و وول خوردن در صندلی</li>
+                            <li>ترک صندلی در موقعیت‌هایی که انتظار می‌رود نشسته بماند</li>
+                            <li>دویدن یا بالا رفتن از اشیاء در موقعیت‌های نامناسب</li>
+                            <li>ناتوانی در بازی یا شرکت در فعالیت‌های اوقات فراغت به آرامی</li>
+                            <li>همیشه "در حال حرکت" یا "موتور روشن"</li>
+                            <li>صحبت بیش از حد</li>
+                            <li>پاسخ دادن قبل از اتمام سؤال</li>
+                            <li>مشکل در انتظار کشیدن نوبت</li>
+                            <li>قطع کردن یا مزاحمت برای دیگران</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <hr class="my-4">
+                
+                <h5>درمان ADHD</h5>
+                <p>
+                    رویکردهای درمانی برای ADHD شامل:
+                </p>
+                <ul>
+                    <li>درمان دارویی (محرک‌ها و غیرمحرک‌ها)</li>
+                    <li>رفتاردرمانی</li>
+                    <li>مشاوره و روان درمانی</li>
+                    <li>آموزش مهارت‌های اجتماعی</li>
+                    <li>تکنیک‌های کنترل استرس و تمرینات ذهن‌آگاهی</li>
+                    <li>تغییرات سبک زندگی (خواب، تغذیه، ورزش)</li>
+                </ul>
+                
+                <div class="alert alert-info mt-4">
+                    <h6>نکته مهم:</h6>
+                    <p class="mb-0">
+                        برای اطلاعات بیشتر و منابع تخصصی در مورد ADHD، لطفاً با متخصصان سلامت روان مشورت کنید.
+                    </p>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <a href="{% url 'contact' %}" class="btn btn-primary">تماس با ما</a>
+                    <a href="{% url 'test_list' %}" class="btn btn-outline-primary ms-2">مشاهده آزمون‌ها</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

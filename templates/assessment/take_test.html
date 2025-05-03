@@ -1,0 +1,212 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load django_bootstrap5 %}
+
+{% block title %}آزمون {{ test.title }} - سیستم آزمون ADHD{% endblock %}
+
+{% block extra_css %}
+<style>
+    .test-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .question-card {
+        border-radius: 10px;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        margin-bottom: 2rem;
+    }
+    .form-check {
+        padding: 12px 15px;
+        margin-bottom: 8px;
+        border-radius: 5px;
+        transition: all 0.2s ease;
+    }
+    .form-check:hover {
+        background-color: #f8f9fa;
+    }
+    .form-check-input {
+        margin-top: 0.3em;
+    }
+    .progress {
+        height: 15px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="test-container">
+    <div class="card border-0 shadow mb-4">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">{{ test.title }}</h3>
+        </div>
+        <div class="card-body">
+            <p class="lead">{{ test.description }}</p>
+            
+            <!-- Progress Bar -->
+            <div class="progress mb-4">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" id="test-progress" style="width: 0%"></div>
+            </div>
+            
+            <form method="POST" id="test-form">
+                {% csrf_token %}
+                
+                {% for form_data in forms %}
+                    <div class="card question-card" id="question-{{ forloop.counter }}">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0">سؤال {{ forloop.counter }} از {{ total_questions }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <h5>{{ form_data.question.text }}</h5>
+                            </div>
+                            
+                            <div class="choices-container">
+                                {{ form_data.form.as_p }}
+                            </div>
+                            
+                            <div class="d-flex justify-content-between mt-4">
+                                {% if not forloop.first %}
+                                    <button type="button" class="btn btn-outline-secondary prev-btn" data-question="{{ forloop.counter }}">
+                                        <i class="bi bi-arrow-right"></i> سؤال قبل
+                                    </button>
+                                {% else %}
+                                    <div></div>
+                                {% endif %}
+                                
+                                {% if forloop.last %}
+                                    <button type="submit" class="btn btn-success">
+                                        ثبت پاسخ‌ها <i class="bi bi-check-lg"></i>
+                                    </button>
+                                {% else %}
+                                    <button type="button" class="btn btn-primary next-btn" data-question="{{ forloop.counter }}">
+                                        سؤال بعد <i class="bi bi-arrow-left"></i>
+                                    </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const totalQuestions = {{ total_questions }};
+        const progressBar = document.getElementById('test-progress');
+        const questions = document.querySelectorAll('.question-card');
+        const nextButtons = document.querySelectorAll('.next-btn');
+        const prevButtons = document.querySelectorAll('.prev-btn');
+        
+        // نمایش فقط سؤال اول در ابتدا
+        questions.forEach((question, index) => {
+            if (index > 0) {
+                question.style.display = 'none';
+            }
+        });
+        
+        // به‌روزرسانی نوار پیشرفت
+        function updateProgress(currentQuestion) {
+            const progress = (currentQuestion / totalQuestions) * 100;
+            progressBar.style.width = progress + '%';
+            progressBar.setAttribute('aria-valuenow', progress);
+        }
+        
+        // رفتن به سؤال بعدی
+        nextButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const currentQuestion = parseInt(this.getAttribute('data-question'));
+                const currentCard = document.getElementById('question-' + currentQuestion);
+                const nextCard = document.getElementById('question-' + (currentQuestion + 1));
+                
+                // بررسی انتخاب گزینه
+                const radioButtons = currentCard.querySelectorAll('input[type="radio"]');
+                let selected = false;
+                
+                radioButtons.forEach(radio => {
+                    if (radio.checked) {
+                        selected = true;
+                    }
+                });
+                
+                if (!selected) {
+                    alert('لطفاً یکی از گزینه‌ها را انتخاب کنید.');
+                    return;
+                }
+                
+                currentCard.style.display = 'none';
+                nextCard.style.display = 'block';
+                
+                // به‌روزرسانی نوار پیشرفت
+                updateProgress(currentQuestion + 1);
+                
+                // اسکرول به بالای صفحه
+                window.scrollTo(0, 0);
+            });
+        });
+        
+        // رفتن به سؤال قبلی
+        prevButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const currentQuestion = parseInt(this.getAttribute('data-question'));
+                const currentCard = document.getElementById('question-' + currentQuestion);
+                const prevCard = document.getElementById('question-' + (currentQuestion - 1));
+                
+                currentCard.style.display = 'none';
+                prevCard.style.display = 'block';
+                
+                // به‌روزرسانی نوار پیشرفت
+                updateProgress(currentQuestion - 1);
+                
+                // اسکرول به بالای صفحه
+                window.scrollTo(0, 0);
+            });
+        });
+        
+        // بررسی تکمیل همه سؤالات قبل از ارسال فرم
+        document.getElementById('test-form').addEventListener('submit', function(e) {
+            let allAnswered = true;
+            
+            questions.forEach((question, index) => {
+                const radioButtons = question.querySelectorAll('input[type="radio"]');
+                let answered = false;
+                
+                radioButtons.forEach(radio => {
+                    if (radio.checked) {
+                        answered = true;
+                    }
+                });
+                
+                if (!answered) {
+                    allAnswered = false;
+                    
+                    // نمایش سؤال پاسخ داده نشده
+                    questions.forEach(q => q.style.display = 'none');
+                    question.style.display = 'block';
+                    
+                    // به‌روزرسانی نوار پیشرفت
+                    updateProgress(index + 1);
+                    
+                    alert(`لطفاً به سؤال ${index + 1} پاسخ دهید.`);
+                    
+                    // اسکرول به بالای صفحه
+                    window.scrollTo(0, 0);
+                    
+                    return;
+                }
+            });
+            
+            if (!allAnswered) {
+                e.preventDefault();
+            }
+        });
+        
+        // به‌روزرسانی اولیه نوار پیشرفت
+        updateProgress(1);
+    });
+</script>
+{% endblock %} 

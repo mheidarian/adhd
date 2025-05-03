@@ -1,0 +1,153 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}راهنمای آزمون - سیستم آزمون ADHD{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card border-0 shadow mb-4">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">راهنمای آزمون ADHD</h3>
+            </div>
+            <div class="card-body">
+                <h4 class="mb-3">درباره آزمون‌های ADHD</h4>
+                <p>
+                    آزمون‌های ADHD ابزارهایی برای غربالگری و شناسایی نشانه‌های اختلال بیش‌فعالی و نقص توجه هستند.
+                    این آزمون‌ها به شما کمک می‌کنند تا ارزیابی اولیه‌ای از وضعیت خود یا فرزندتان داشته باشید.
+                </p>
+                
+                <div class="alert alert-warning mt-3">
+                    <strong>نکته مهم:</strong> آزمون‌های آنلاین ADHD جایگزین تشخیص پزشکی نیستند. 
+                    برای تشخیص قطعی و درمان ADHD، لازم است به روانپزشک یا روانشناس متخصص مراجعه کنید.
+                </div>
+                
+                <h4 class="mt-4 mb-3">نحوه انجام آزمون</h4>
+                <ol class="list-group list-group-numbered mb-4">
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 ms-auto">
+                            <div class="fw-bold">انتخاب آزمون مناسب</div>
+                            از صفحه «آزمون‌ها» یکی از آزمون‌های موجود را انتخاب کنید.
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 ms-auto">
+                            <div class="fw-bold">مطالعه توضیحات</div>
+                            قبل از شروع آزمون، توضیحات و راهنمای آن را با دقت مطالعه کنید.
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 ms-auto">
+                            <div class="fw-bold">پاسخ به سؤالات</div>
+                            به تمام سؤالات آزمون با صداقت پاسخ دهید. برای هر سؤال فقط یک گزینه را انتخاب کنید.
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 ms-auto">
+                            <div class="fw-bold">مشاهده نتیجه</div>
+                            پس از تکمیل آزمون، نتیجه آن به همراه توضیحات تکمیلی نمایش داده می‌شود.
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 ms-auto">
+                            <div class="fw-bold">دریافت راهنمایی تخصصی</div>
+                            در صورت نیاز، با متخصصان روانپزشکی یا روانشناسی مشورت کنید.
+                        </div>
+                    </li>
+                </ol>
+                
+                <h4 class="mb-3">توصیه‌های مهم</h4>
+                <ul class="list-group mb-4">
+                    <li class="list-group-item">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        آزمون را در یک محیط آرام و بدون حواس‌پرتی انجام دهید.
+                    </li>
+                    <li class="list-group-item">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        زمان کافی برای پاسخ به سؤالات اختصاص دهید و عجله نکنید.
+                    </li>
+                    <li class="list-group-item">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        صادقانه پاسخ دهید. پاسخ‌های غیرواقعی به نتایج نادرست منجر می‌شوند.
+                    </li>
+                    <li class="list-group-item">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        اگر در مورد سؤالی مطمئن نیستید، گزینه‌ای را انتخاب کنید که بیشتر با وضعیت شما مطابقت دارد.
+                    </li>
+                    <li class="list-group-item">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        به خاطر داشته باشید که این آزمون‌ها فقط ابزارهای غربالگری هستند، نه تشخیص قطعی.
+                    </li>
+                </ul>
+                
+                <div class="d-grid gap-2">
+                    <a href="{% url 'test_list' %}" class="btn btn-primary">
+                        مشاهده لیست آزمون‌ها
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card border-0 shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">سؤالات متداول</h4>
+            </div>
+            <div class="card-body">
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faq1">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#answer1">
+                                آیا نتایج این آزمون‌ها قطعی هستند؟
+                            </button>
+                        </h2>
+                        <div id="answer1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                خیر، نتایج این آزمون‌ها فقط نشانگر احتمال وجود ADHD هستند و برای تشخیص قطعی باید به متخصص مراجعه کنید.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faq2">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#answer2">
+                                آیا این آزمون‌ها برای کودکان هم مناسب هستند؟
+                            </button>
+                        </h2>
+                        <div id="answer2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                بله، برخی از آزمون‌های ما مخصوص ارزیابی کودکان طراحی شده‌اند. والدین می‌توانند به نمایندگی از فرزند خود به سؤالات پاسخ دهند.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faq3">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#answer3">
+                                چگونه می‌توانم نتایج آزمون را با پزشک خود به اشتراک بگذارم؟
+                            </button>
+                        </h2>
+                        <div id="answer3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                شما می‌توانید صفحه نتیجه آزمون را ذخیره یا چاپ کنید و در مراجعه بعدی به پزشک، آن را به ایشان نشان دهید.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faq4">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#answer4">
+                                آیا اطلاعات من محرمانه باقی می‌ماند؟
+                            </button>
+                        </h2>
+                        <div id="answer4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                بله، تمام اطلاعات شما محرمانه باقی می‌ماند و تنها برای ارائه نتایج آزمون مورد استفاده قرار می‌گیرد.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,47 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+{% load django_bootstrap5 %}
+
+{% block title %}تأیید آدرس ایمیل{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h2 class="h4 m-0">تأیید آدرس ایمیل</h2>
+            </div>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <i class="bi bi-envelope-check display-1 text-primary"></i>
+                </div>
+                
+                <div class="alert alert-info">
+                    <p class="mb-0">
+                        لطفاً ایمیل خود را بررسی کنید و روی لینک تأیید ارسال شده کلیک کنید.
+                    </p>
+                </div>
+                
+                <p>
+                    برای تکمیل فرآیند ثبت‌نام و دسترسی به حساب کاربری خود، باید آدرس ایمیل خود را تأیید کنید.
+                    ما یک ایمیل حاوی لینک تأیید به آدرس ایمیلی که ارائه کرده‌اید، ارسال کرده‌ایم.
+                </p>
+                
+                <p>
+                    اگر ایمیل تأیید را در صندوق ورودی اصلی خود نمی‌بینید، لطفاً:
+                </p>
+                
+                <ul>
+                    <li>پوشه اسپم/هرزنامه خود را بررسی کنید</li>
+                    <li>چند دقیقه دیگر صبر کنید (گاهی ممکن است ارسال ایمیل کمی زمان ببرد)</li>
+                    <li>مطمئن شوید که آدرس ایمیلی که وارد کرده‌اید صحیح است</li>
+                </ul>
+                
+                <div class="d-grid gap-2 mt-4">
+                    <a href="{% url 'home' %}" class="btn btn-primary">بازگشت به صفحه اصلی</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

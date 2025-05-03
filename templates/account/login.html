@@ -1,0 +1,58 @@
+{% extends "base/base.html" %}
+{% load allauth i18n %}
+{% load django_bootstrap5 %}
+
+{% block title %}ورود{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h2 class="h4 m-0">ورود به حساب کاربری</h2>
+            </div>
+            <div class="card-body">
+                <p class="mb-4">
+                    هنوز حساب کاربری ندارید؟ 
+                    <a href="{% url 'account_signup' %}" class="text-primary">ثبت‌نام کنید</a>
+                </p>
+
+                <form method="post" action="{% url 'account_login' %}" class="mb-3">
+                    {% csrf_token %}
+                    {% bootstrap_form form layout="floating" %}
+                    {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                    {% endif %}
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div class="form-check">
+                            <input type="checkbox" name="remember" id="id_remember" class="form-check-input">
+                            <label for="id_remember" class="form-check-label">مرا به خاطر بسپار</label>
+                        </div>
+                        <a href="{% url 'account_reset_password' %}" class="text-primary">رمز عبور را فراموش کرده‌اید؟</a>
+                    </div>
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg">ورود</button>
+                    </div>
+                </form>
+
+                {% if PASSKEY_LOGIN_ENABLED %}
+                    <hr>
+                    <div class="d-grid gap-2">
+                        <a href="{{ passkey_login_url }}" class="btn btn-outline-primary">
+                            ورود با passkey
+                        </a>
+                    </div>
+                {% endif %}
+
+                {% if SOCIALACCOUNT_ENABLED %}
+                    <hr>
+                    <h3 class="h5 text-center mb-3">ورود با حساب‌های اجتماعی</h3>
+                    <div class="d-grid gap-2">
+                        {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

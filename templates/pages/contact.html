@@ -1,0 +1,112 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}تماس با ما - سیستم آزمون ADHD{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card border-0 shadow mb-4">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">تماس با ما</h3>
+            </div>
+            <div class="card-body p-4">
+                <div class="row">
+                    <div class="col-md-6 mb-4 mb-md-0">
+                        <h4 class="mb-3">اطلاعات تماس</h4>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex">
+                                <i class="bi bi-geo-alt-fill text-primary ms-3 fs-4"></i>
+                                <div>
+                                    <strong>آدرس:</strong><br>
+                                    تهران، خیابان آزادی، ساختمان مرکزی، طبقه ۳، واحد ۱۰
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex">
+                                <i class="bi bi-telephone-fill text-primary ms-3 fs-4"></i>
+                                <div>
+                                    <strong>تلفن:</strong><br>
+                                    ۰۲۱-۸۸۷۷۶۶۵۵
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex">
+                                <i class="bi bi-envelope-fill text-primary ms-3 fs-4"></i>
+                                <div>
+                                    <strong>ایمیل:</strong><br>
+                                    info@adhd-test.com
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex">
+                                <i class="bi bi-clock-fill text-primary ms-3 fs-4"></i>
+                                <div>
+                                    <strong>ساعات کاری:</strong><br>
+                                    شنبه تا چهارشنبه: ۸ صبح تا ۵ عصر<br>
+                                    پنجشنبه: ۸ صبح تا ۱ بعد از ظهر
+                                </div>
+                            </li>
+                        </ul>
+                        
+                        <h5 class="mt-4 mb-3">ما را در شبکه‌های اجتماعی دنبال کنید</h5>
+                        <div class="d-flex gap-3">
+                            <a href="#" class="btn btn-outline-primary">
+                                <i class="bi bi-instagram"></i>
+                            </a>
+                            <a href="#" class="btn btn-outline-primary">
+                                <i class="bi bi-telegram"></i>
+                            </a>
+                            <a href="#" class="btn btn-outline-primary">
+                                <i class="bi bi-twitter"></i>
+                            </a>
+                            <a href="#" class="btn btn-outline-primary">
+                                <i class="bi bi-linkedin"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <h4 class="mb-3">فرم تماس</h4>
+                        <p>برای ارسال سؤالات، پیشنهادات یا درخواست‌های خود، لطفاً فرم زیر را تکمیل کنید:</p>
+                        
+                        <form method="POST">
+                            {% csrf_token %}
+                            
+                            <div class="mb-3">
+                                <label for="name" class="form-label">نام و نام خانوادگی</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="email" class="form-label">ایمیل</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="subject" class="form-label">موضوع</label>
+                                <input type="text" class="form-control" id="subject" name="subject" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="message" class="form-label">پیام</label>
+                                <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">ارسال پیام</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card border-0 shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">موقعیت ما</h4>
+            </div>
+            <div class="card-body p-0">
+                <!-- جایگزین نقشه با یک تصویر استاتیک (اگر API گوگل مپ در دسترس نباشد) -->
+                <img src="{% static 'img/map.jpg' %}" class="img-fluid w-100" alt="نقشه" onerror="this.src='https://placehold.co/800x400/f0f0f0/555555?text=نقشه'">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

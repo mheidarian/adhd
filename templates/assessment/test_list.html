@@ -1,0 +1,54 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}لیست آزمون‌ها - سیستم آزمون ADHD{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card border-0 shadow mb-4">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">آزمون‌های ADHD</h3>
+            </div>
+            <div class="card-body">
+                <p class="lead">
+                    در این بخش می‌توانید به آزمون‌های مختلف ADHD دسترسی داشته باشید.
+                    برای شروع هر آزمون، روی دکمه «جزئیات بیشتر» کلیک کنید.
+                </p>
+                <p>
+                    <strong>نکته مهم:</strong> این آزمون‌ها فقط برای ارزیابی اولیه هستند و نتایج آن‌ها 
+                    جایگزین تشخیص پزشکی نیست. برای تشخیص قطعی به متخصص مراجعه کنید.
+                </p>
+                
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle"></i>
+                    قبل از شروع آزمون، لطفاً <a href="{% url 'test_guide' %}" class="alert-link">راهنمای آزمون</a> را مطالعه کنید.
+                </div>
+            </div>
+        </div>
+        
+        {% if tests %}
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                {% for test in tests %}
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ test.title }}</h5>
+                                <p class="card-text">{{ test.description|truncatewords:30 }}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-primary rounded-pill">{{ test.get_question_count }} سؤال</span>
+                                    <a href="{% url 'test_detail' test.id %}" class="btn btn-outline-primary">جزئیات بیشتر</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-warning">
+                در حال حاضر هیچ آزمونی وجود ندارد. لطفاً بعداً دوباره امتحان کنید.
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,103 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}صفحه اصلی - سیستم آزمون ADHD{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card border-0 shadow-lg mb-5">
+            <div class="row g-0">
+                <div class="col-md-6">
+                    <img src="{% static 'img/test-banner.jpg' %}" class="img-fluid rounded" alt="ADHD Test" onerror="this.src='https://placehold.co/600x500/'">
+                </div>
+                <div class="col-md-6">
+                    <div class="card-body p-5">
+                        <h1 class="card-title fs-2 mb-4">ارزیابی اختلال بیش‌فعالی و نقص توجه (ADHD)</h1>
+                        <p class="card-text">
+                            سیستم آزمون ADHD یک ابزار آنلاین برای ارزیابی اولیه علائم اختلال بیش‌فعالی و نقص توجه است. 
+                            این آزمون‌ها به شما کمک می‌کنند تا متوجه شوید آیا ممکن است نشانه‌های ADHD را داشته باشید یا خیر.
+                        </p>
+                        <p class="card-text">
+                            <strong>توجه:</strong> این آزمون‌ها جایگزین تشخیص پزشکی نیستند. برای تشخیص قطعی ADHD، 
+                            حتماً با یک متخصص روانپزشک یا روانشناس مشورت کنید.
+                        </p>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'test_list' %}" class="btn btn-primary btn-lg mt-3">مشاهده آزمون‌ها</a>
+                        {% else %}
+                            <a href="{% url 'account_signup' %}" class="btn btn-success btn-lg mt-3">ثبت‌نام و شروع آزمون</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+            <div class="col">
+                <div class="card h-100 border-0 shadow">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <span class="display-4 text-primary">
+                                <i class="bi bi-clipboard-check"></i> <!-- نیاز به اضافه کردن Bootstrap Icons -->
+                            </span>
+                        </div>
+                        <h5 class="card-title">آزمون استاندارد</h5>
+                        <p class="card-text">آزمون‌های استاندارد برای ارزیابی علائم ADHD در بزرگسالان و کودکان</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 border-0 shadow">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <span class="display-4 text-primary">
+                                <i class="bi bi-graph-up"></i>
+                            </span>
+                        </div>
+                        <h5 class="card-title">گزارش نتایج</h5>
+                        <p class="card-text">دریافت گزارش مفصل از نتایج آزمون با توضیحات تکمیلی</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 border-0 shadow">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <span class="display-4 text-primary">
+                                <i class="bi bi-shield-check"></i>
+                            </span>
+                        </div>
+                        <h5 class="card-title">حریم خصوصی</h5>
+                        <p class="card-text">حفظ کامل حریم خصوصی و محرمانگی اطلاعات شما</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card border-0 shadow-lg">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">درباره ADHD</h3>
+            </div>
+            <div class="card-body p-4">
+                <p>
+                    اختلال بیش‌فعالی و نقص توجه (ADHD) یک اختلال رشدی-عصبی است که با الگوهای پایدار عدم توجه، 
+                    بیش‌فعالی و رفتار تکانشی مشخص می‌شود. ADHD یکی از شایع‌ترین اختلالات روانپزشکی در کودکان است،
+                    اما معمولاً تا بزرگسالی ادامه می‌یابد.
+                </p>
+                <p>
+                    علائم اصلی ADHD شامل:
+                </p>
+                <ul>
+                    <li>مشکل در حفظ توجه و تمرکز</li>
+                    <li>بیش‌فعالی (فعالیت بیش از حد)</li>
+                    <li>تکانشگری (عمل بدون فکر)</li>
+                </ul>
+                <p>
+                    برای کسب اطلاعات بیشتر درباره ADHD و نحوه مدیریت آن، با یک متخصص مشورت کنید.
+                </p>
+                <a href="{% url 'about' %}" class="btn btn-outline-primary mt-2">اطلاعات بیشتر</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

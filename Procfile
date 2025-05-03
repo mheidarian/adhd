@@ -1,0 +1,1 @@
+web: gunicorn adhd_core.wsgi --log-file - 

@@ -1,0 +1,116 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+{% load django_bootstrap5 %}
+
+{% block title %}مدیریت ایمیل‌ها{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h2 class="h4 m-0">مدیریت ایمیل‌ها</h2>
+            </div>
+            <div class="card-body">
+                {% if user.emailaddress_set.all %}
+                    <p class="mb-4">
+                        ایمیل اصلی حساب شما <strong>{{ user.email }}</strong> است.
+                        {% if user.emailaddress_set.filter.verified %}
+                            <span class="badge bg-success">تأیید شده</span>
+                        {% else %}
+                            <span class="badge bg-warning text-dark">تأیید نشده</span>
+                        {% endif %}
+                    </p>
+                    
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0">ایمیل‌های شما</h5>
+                        </div>
+                        <div class="card-body">
+                            <form action="{% url 'account_email' %}" method="post">
+                                {% csrf_token %}
+                                {% bootstrap_formset_errors formset %}
+                                
+                                <div class="list-group">
+                                    {% for emailaddress in user.emailaddress_set.all %}
+                                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <label for="email_radio_{{ forloop.counter }}" class="mb-0">
+                                                    <input id="email_radio_{{ forloop.counter }}" type="radio" name="email" 
+                                                           {% if emailaddress.primary %}checked="checked"{% endif %} 
+                                                           value="{{ emailaddress.email }}">
+                                                    {{ emailaddress.email }}
+                                                </label>
+                                                
+                                                <div class="mt-1">
+                                                    {% if emailaddress.verified %}
+                                                        <span class="badge bg-success">تأیید شده</span>
+                                                    {% else %}
+                                                        <span class="badge bg-warning text-dark">تأیید نشده</span>
+                                                    {% endif %}
+                                                    
+                                                    {% if emailaddress.primary %}
+                                                        <span class="badge bg-primary">اصلی</span>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                
+                                <div class="d-flex justify-content-between mt-3">
+                                    <div>
+                                        <button class="btn btn-outline-primary" type="submit" name="action_primary">تنظیم به عنوان اصلی</button>
+                                        <button class="btn btn-outline-danger" type="submit" name="action_remove">حذف</button>
+                                    </div>
+                                    <button class="btn btn-primary" type="submit" name="action_send">ارسال مجدد تأییدیه</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                {% endif %}
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">افزودن ایمیل</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="{% url 'account_email' %}">
+                            {% csrf_token %}
+                            {% bootstrap_form form layout="floating" %}
+                            <button name="action_add" class="btn btn-primary" type="submit">افزودن ایمیل</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <hr class="my-4">
+                
+                <div class="d-grid gap-2">
+                    <a href="{% url 'profile' %}" class="btn btn-outline-primary">
+                        <i class="bi bi-arrow-right-short"></i> بازگشت به پروفایل
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        window.addEventListener('load', function() {
+            if (window.location.hash && window.location.hash === "#email-verification-sent") {
+                document.getElementById('email-verification-sent-alert').classList.remove('d-none');
+            }
+        });
+        
+        const message = "آیا مطمئن هستید که می‌خواهید این ایمیل را حذف کنید؟";
+        document.querySelectorAll('[name="action_remove"]').forEach(function(button) {
+            button.addEventListener('click', function() {
+                return confirm(message);
+            });
+        });
+    });
+</script>
+{% endblock %} 

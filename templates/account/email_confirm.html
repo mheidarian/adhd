@@ -1,0 +1,47 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+{% load account %}
+{% load django_bootstrap5 %}
+
+{% block title %}تأیید آدرس ایمیل{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h2 class="h4 m-0">تأیید آدرس ایمیل</h2>
+            </div>
+            <div class="card-body">
+                {% if confirmation %}
+                    {% user_display confirmation.email_address.user as user_display %}
+                    {% if can_confirm %}
+                        <p class="mb-4">
+                            لطفاً تأیید کنید که <a href="mailto:{{ confirmation.email_address.email }}">{{ confirmation.email_address.email }}</a> آدرس ایمیل کاربر {{ user_display }} است.
+                        </p>
+                        
+                        <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+                            {% csrf_token %}
+                            {% if redirect_field_value %}
+                                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                            {% endif %}
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-lg">تأیید</button>
+                            </div>
+                        </form>
+                    {% else %}
+                        <div class="alert alert-warning">
+                            قادر به تأیید ایمیل {{ confirmation.email_address.email }} نیستیم زیرا قبلاً توسط حساب کاربری دیگری تأیید شده است.
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="alert alert-danger">
+                        لینک تأیید ایمیل منقضی شده یا نامعتبر است. لطفاً 
+                        <a href="{% url 'account_email' %}" class="alert-link">درخواست ایمیل تأیید جدید</a> ارسال کنید.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

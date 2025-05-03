@@ -1,0 +1,161 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+{% block title %}پروفایل کاربری - {{ user.username }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .profile-img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 5px solid #f8f9fa;
+    }
+    .nav-pills .nav-link.active {
+        background-color: #0d6efd;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3">
+        <div class="card border-0 shadow mb-4">
+            <div class="card-body text-center">
+                <img src="{{ user.profile.image.url }}" onerror="this.src='https://placehold.co/150x150/f0f0f0/555555?text=کاربر'" class="profile-img mb-3" alt="{{ user.username }}">
+                <h5 class="card-title">{{ user.get_full_name|default:user.username }}</h5>
+                <p class="text-muted">{{ user.email }}</p>
+            </div>
+        </div>
+        
+        <div class="card border-0 shadow">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">گزینه‌ها</h5>
+            </div>
+            <div class="card-body p-0">
+                <nav class="nav nav-pills flex-column">
+                    <a class="nav-link active" id="profile-tab" data-bs-toggle="tab" href="#profile">
+                        <i class="bi bi-person"></i> پروفایل
+                    </a>
+                    <a class="nav-link" id="test-history-tab" data-bs-toggle="tab" href="#test-history">
+                        <i class="bi bi-clipboard-data"></i> تاریخچه آزمون‌ها
+                    </a>
+                    <a class="nav-link" id="password-tab" data-bs-toggle="tab" href="#password">
+                        <i class="bi bi-key"></i> تغییر رمز عبور
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-9">
+        <div class="tab-content">
+            <!-- Profile Info Tab -->
+            <div class="tab-pane fade show active" id="profile">
+                <div class="card border-0 shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">ویرایش اطلاعات پروفایل</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {% bootstrap_form u_form layout="floating" %}
+                                </div>
+                                <div class="col-md-6">
+                                    {% bootstrap_form p_form layout="floating" %}
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">
+                                به‌روزرسانی پروفایل
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Test History Tab -->
+            <div class="tab-pane fade" id="test-history">
+                <div class="card border-0 shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">تاریخچه آزمون‌ها</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if test_history %}
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>آزمون</th>
+                                            <th>شناسه</th>
+                                            <th>تاریخ</th>
+                                            <th>نتیجه</th>
+                                            <th>عملیات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for result in test_history %}
+                                            <tr>
+                                                <td>{{ result.test.title }}</td>
+                                                <td><code>{{ result.unique_id }}</code></td>
+                                                <td>{{ result.date_taken|date:"Y/m/d H:i" }}</td>
+                                                <td>{{ result.get_interpretation }}</td>
+                                                <td>
+                                                    <a href="{% url 'test_result' result.id %}" class="btn btn-sm btn-outline-primary">
+                                                        مشاهده
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% else %}
+                            <div class="alert alert-info">
+                                شما هنوز هیچ آزمونی را تکمیل نکرده‌اید.
+                                <a href="{% url 'test_list' %}" class="alert-link">به صفحه آزمون‌ها</a> بروید و یک آزمون را شروع کنید.
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Change Password Tab -->
+            <div class="tab-pane fade" id="password">
+                <div class="card border-0 shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">تغییر رمز عبور</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-3">
+                            برای تغییر رمز عبور خود، لطفاً به صفحه زیر بروید:
+                        </p>
+                        <a href="{% url 'account_change_password' %}" class="btn btn-primary">
+                            تغییر رمز عبور
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // فعال کردن Bootstrap tabs
+    document.addEventListener('DOMContentLoaded', function() {
+        var triggerTabList = [].slice.call(document.querySelectorAll('.nav-pills a'))
+        triggerTabList.forEach(function (triggerEl) {
+            var tabTrigger = new bootstrap.Tab(triggerEl)
+            triggerEl.addEventListener('click', function (event) {
+                event.preventDefault()
+                tabTrigger.show()
+            })
+        })
+    });
+</script>
+{% endblock %} 
